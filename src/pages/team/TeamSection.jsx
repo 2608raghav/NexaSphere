@@ -13,6 +13,7 @@ const CLICK_ACTION_DELAY = 110;
 
 function MemberCard({ member, idx, onClick }) {
   const ref = useRef(null);
+  const [imgError, setImgError] = useState(false);
 
   const handleMouseMove = e => {
     const card = ref.current;
@@ -59,7 +60,12 @@ function MemberCard({ member, idx, onClick }) {
       }}
     >
       <div className="team-card-photo-wrap">
-        <img src={member.photo} alt={member.name} className="team-card-photo" />
+        <img 
+        src={imgError ? 'https://api.dicebear.com/7.x/initials/svg?seed=' + encodeURIComponent(member.name) + '&backgroundColor=CC1111&textColor=ffffff' : member.photo} 
+        alt={member.name} 
+        className="team-card-photo"
+        onError={() => setImgError(true)}
+      />
       </div>
       <div className="team-card-name">{member.name}</div>
       <div className="team-card-role">{member.role}</div>
